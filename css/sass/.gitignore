@@ -1,0 +1,7 @@
+*.log
+.Thumbs.db
+*.psd
+*.zip
+*.rar
+^.fuse_hidden
+.sass-cache
