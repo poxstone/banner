@@ -1,3 +1,44 @@
+
+@include keyframes(atenuar_in) {
+//@include animation(atenuar_in 250ms ease-in-out);
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	} 
+}
+@include keyframes(atenuar_out) {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	} 
+}
+
+@include keyframes(desph_in) {
+//@include animation(atenuar_in 250ms ease-in-out);
+	0% {
+      	@include vendor-prefix(transform, translateX(100%) );
+      	opacity: 1;
+	}
+	100% {
+      	@include vendor-prefix(transform, translateX(0px) );
+      	opacity: 1;
+	} 
+}
+@include keyframes(desph_out) {
+	0% {
+      	@include vendor-prefix(transform, translateX(0px) );
+		opacity: 1;
+	}
+	100% {
+      	@include vendor-prefix(transform, translateX(-100%) );
+		opacity: 1;
+	} 
+}
+
 @include keyframes(menuDown) {
 	//@include animation(menuDown 250ms ease-in-out);
     0% {
@@ -16,14 +57,16 @@ html{
 	background: $bgColor;
 	color: $textColor;
 	overflow: hidden;
+	background: transparent;
 }
 
 body{
 	overflow: hidden;
+	background: transparent;
 }
 
 .wrapper{
-	height: 100%;
+	height: 300px;
 	width: auto;
 	max-width: $wrapper;
 	margin: auto;
@@ -31,10 +74,19 @@ body{
 	top: 0;
 	left: 0;
 	right: 0;
+	overflow: hidden;
 	bottom: 0; 
-	background: red;
 }
-#banner{
+#banner-local{
+	display: none;
+	.arr .icon i{
+		//top: 3%;
+	}
+}
+.con-parcial{
+	display: none;
+}
+.banner{
 	@include defaultDisplay();
 	position: relative;
 	height: 100%;
@@ -46,9 +98,18 @@ body{
 		top: 0;
 		bottom: 0;
 		right: 0;
-		display: none;
-		&:first-child{
+		&.show{
+			z-index: 2;
 			display: block;
+			.detalle{
+				z-index: 2;
+			}
+		}
+		&.hide{
+			opacity: 0;
+			.detalle{
+				z-index: -1;
+			}
 		}
 		&[onclick*="location"]{
 			cursor: pointer;
@@ -60,9 +121,12 @@ body{
 		background-repeat: no-repeat;
 		overflow: hidden;
 		position: relative;
-		background-color:$black;
+		background-color: $black;
 		&[style*="background"]{
 			background-color: transparent;
+		}
+		&[onclick*="banner.lnk"]{
+			cursor: pointer;
 		}
 	}
 	&:hover{
@@ -111,13 +175,14 @@ body{
 	}
 	.iframe{
 		margin: auto;
-		margin-top: 15px;
 		bottom: 5%;
-		left: 10%;
 		height: 90%;
 		width: 80%;
 		display: block;
-		max-width: 550px;
+		max-width: 640px;
+		position: relative;
+		z-index: 1;
+		top: 5%;
 
 		& +.detalle{
 			display: none;
@@ -131,6 +196,7 @@ body{
 	.detalle{
 		@include transition(all ease-in-out 250ms);
 		position: absolute;
+		cursor: default;
 		background-color: $black;
 		opacity: 0.25;
 		color: #fff;
@@ -142,6 +208,8 @@ body{
 			@include transition(all ease-in-out 250ms);
 			max-height: 55px;
 			opacity: 0;
+			padding: 1px 0px;
+			margin: auto;
 		}
 		&:hover{
 			opacity: 1;
@@ -176,10 +244,12 @@ body{
 		text-decoration: none;
 		color: $black;
 		overflow: hidden;
+		z-index: 3;
 
 		&:hover{
 			color: $blue;
 			.icon i{
+				opacity: 1;
 				&:before,&:after{
 					background-color: $blue;
 				}
@@ -195,13 +265,15 @@ body{
 			height: $circsize;
 			line-height: $circsize;
 			margin-top: -0.5*$circsize;
-			border-radius: 1000px;
-			background: white;
 			font-size: 40px;
+			cursor: pointer;
+			opacity: 0.75;
 
 			i{
 				@include transition(all 250ms ease-in-out);
-				position: relative;
+				position: absolute;
+				top: 50%;
+				margin-top: -0.5em;
 				&:before,&:after{
 					@include transition(all 250ms ease-in-out);
 					position: relative;
@@ -211,6 +283,12 @@ body{
 					height: $arrHeight;
 					width: $arrWidth;
 				}
+				&:before{
+					top: -$arrHeight/2;
+				}
+				&:after{
+					top: $arrHeight/2;
+				}
 			}
 		}
 		
@@ -218,24 +296,16 @@ body{
 			text-align: right;
 			left: 0;
 			border-radius: 0 1000% 1000% 0;
-			
-			&:hover{
-				.icon{
-					@include box-shadow( rgba(0,0,0,0.25) -4px 0px 6px 0 inset );
-				}
-			}
 
 			.icon{
 				right: 0;
 				i{
 					//@include arrow(10px,20px,left,$black);
-					margin-right: 5px;
+					right: 5px;
 					&:before{
-						top: -$arrHeight/2;
 						@include skewX(-30deg);
 					}
 					&:after{
-						top: $arrHeight/2;
 						left: -$arrWidth;
 						@include skewX(30deg);
 					}
@@ -247,24 +317,16 @@ body{
 			right: 0;
 			border-radius: 1000% 0 0 1000%;
 
-			&:hover{
-				.icon{
-					@include box-shadow( rgba(0,0,0,0.25) 4px 0px 6px 0 inset );
-				}
-			}
-
 			.icon{
 				left: 0;
 				i{
 					//@include arrow(10px,20px,right,$black);
-					margin-left: 5px;
+					left: 5px;
 					&:before{
-						top: -$arrHeight/2;
 						left: $arrWidth;
 						@include skewX(30deg);
 					}
 					&:after{
-						top: $arrHeight/2;
 						@include skewX(-30deg);
 					}
 				}
@@ -273,39 +335,47 @@ body{
 	}
 }
 
-.bsiz-estirar .item-cont{
-	background-size: 100% 100%;
-}
-.bsiz-ajustar .item-cont{
-	background-size: cover;
-}
-.bsiz-ancho .item-cont{
-	background-size: 100% auto;
-}
-.bsiz-alto .item-cont{
-	background-size: auto 100%;
-}
-.bsiz-original .item-cont{
-	background-size: auto auto;
+/*tamaño de imagen*/
+.banner{
+	&.bsiz-ex .item-cont{
+		background-size: 100% 100%;
+	}
+	&.bsiz-rl .item-cont{//Rellenar
+		background-size: cover;
+	}
+	&.bsiz-aw .item-cont{//Ajustar ancho
+		background-size: 100% auto;
+	}
+	&.bsiz-ah .item-cont{//ajustar alto
+		background-size: auto 100%;
+	}
+	&.bsiz-or .item-cont{//tamaño original
+		background-size: auto auto;
+	}
+	&.bsiz-ms .item-cont{//mosaico
+		background-size: auto auto;
+		background-repeat: repeat;
+	}
 }
 
-.bpos-arriba .item-cont{
-	background-position: top center;
-}
-.bpos-centrado .item-cont{
-	background-position: center center;
-}
-.bpos-abajo .item-cont{
-	background-position: bottom center;
+.banner{
+	&.bpos-up .item-cont{//arriba
+		background-position: top center;
+	}
+	&.bpos-cn .item-cont{//centrado
+		background-position: center center;
+	}
+	&.bpos-dw .item-cont{//abajo
+		background-position: bottom center;
+	}
 }
 
 /*comentarios*/
-#banner {
-
+.banner {
 	&.cmt-no .detalle{
 		display: none;
 	}
-	&.cmt-arriba {
+	&.cmt-up {
 		.detalle{
 			top: 0;
 			margin-top: -45px;
@@ -316,51 +386,154 @@ body{
 				}
 			}
 		}
-		&.rad-arriba .radios{
-			top: 80px;
-			margin-top: -60px;
+		&.rad-up .radios{
+			top: 50px;
+			margin-top: -40px;
 		}
 	}
-	&.cmt-abajo{
+	&.cmt-dw{
 		.detalle{
 			bottom: 0;
 			margin-bottom: -45px;
 		}
-		&.rad-abajo .radios{
-			margin-bottom: -60px;
-			bottom: 80px;	
+		&.rad-dw .radios{
+			margin-bottom: -40px;
+			bottom: 50px;	
 		}
 	}
 }
+
 /*radios*/
-#banner{
-	&.rad-no{
+.banner{
+	&.rad-no .radios{
 		display: none;
 	}
-
-	&.rad-abajo .radios{
+	&.rad-dw .radios{
 		bottom: 10px;
 	}
-
-	&.rad-arriba .radios{
+	&.rad-up .radios{
 		top: 10px;
 	}
-	&.rad-izquierda .radios{
+//
+	&.rad-lf .radios{
 		text-align: left;
 	}
-	&.rad-derecha .radios{
+	&.rad-rg .radios{
 		text-align: right;
 	}
-	&.rad-centrado .radios{
+	&.rad-cn .radios{
 		text-align: center;
 	}
 }
-#banner.arr-si{
-	.detalle{
-		padding-right: 40px;
-		padding-left: 40px;
+.banner{
+	&.flc-si{
+		.detalle{
+			padding-right: 60px;
+			padding-left: 60px;
+		}
+		.arr{
+			display: block;
+		}
 	}
-	.arr{
-		display: block;
+}
+
+/*transiciones*/
+.banner {
+	&.tr-0{//atenuacion
+		.item{
+			&.show{
+				@include animation(atenuar_in 1s ease-in 1);
+			}
+			&.hide{
+				@include animation(atenuar_out 1s ease-out 1);
+			}
+		}
+	}
+	&.tr-1{//atenuacion
+		.item{
+			&.show{
+				@include animation(desph_in 1s ease-in-out 1);
+			}
+			&.hide{
+				@include animation(desph_out 1s ease-in-out 1);
+			}
+		}
+	}
+}
+
+/*temas*/
+.banner{
+	&.tm-0{
+		.arr {
+			.icon{
+				border-radius: 1000px;
+			}
+			&.left{
+				&:hover{
+					.icon{
+						@include box-shadow( rgba(0,0,0,0.25) -4px 0px 6px 0 inset );
+					}
+				}
+			}
+			&.right{
+				&:hover{
+					.icon{
+						@include box-shadow( rgba(0,0,0,0.25) 4px 0px 6px 0 inset );
+					}
+				}
+			}
+		}
+
+	}
+	&.tm-1{
+		@extend .tm-0;
+		.arr .icon{
+			background: white;
+			opacity: 1;
+		}
+		.iframe{
+			@include box-shadow(rgba(0,0,0,0.75) 0 0 12px 0);
+		}
+	}
+	&.tm-2{
+		.arr{
+			bottom: 18%;
+			text-align: center;
+			&, .icon{
+				height: 60px;
+				width: 60px;
+				overflow: visible;
+			}
+			.icon{
+				margin: 0;
+				i{
+					height: 60px;
+					width: 60px;
+					top: auto;
+					&:before,&:after{
+						height: 22px;
+					}
+					&:before{
+						top: 8px;
+						@include skewX(-45deg);
+					}
+					&:after{
+						top: 30px;
+						@include skewX(45deg);
+					}
+				}
+			}
+			&.left{
+				right: 50px;
+				left: auto;
+				.icon i{
+				}
+			}
+			&.right{
+				.icon i{
+					@include rotate(180deg);
+				}
+			}
+		}
 	}
 }

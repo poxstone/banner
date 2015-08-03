@@ -5,21 +5,18 @@
 	<meta charset="UTF-8">
 	<title>banner</title>
 	<meta name="viewport" content="width=device-width , initial-scale=1 ,maximum-scale=1">
-
-	<!--[if lt IE 9]> <link href="css/ie7-8.css" media="screen, projection" rel="stylesheet" type="text/css" /><![endif]-->
-
 	<script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body>
-
-	<?php include('body.html');?>
-
+	<div class="wrapper">
+		<?php include('body.html');?>
+	</div>
 
 <style>
-<?php include('css/portal_general.css');?>
+<?php include('css/banner.css');?>
 </style>
 <script>
-<?php include('js/portal_diseno.js');?>
+<?php include('js/banner.js');?>
 </script>
 </body>
 </html>
