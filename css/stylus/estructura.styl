@@ -1,0 +1,429 @@
+@import 'nib'
+
+html
+    font-family $fontFamily
+    font-size $text_p
+    background $bgColor
+    color $textColor
+    overflow hidden
+    background transparent
+
+body
+    overflow hidden
+    background transparent
+
+.wrapper
+    height 300px
+    width auto
+    max-width $wrapper
+    margin auto
+    position absolute
+    top 0
+    left 0
+    right 0
+    overflow hidden
+    bottom 0
+
+#banner-local-html
+    display: none
+    
+
+.con-parcial
+    display none
+
+.banner
+    defaultDisplay()
+    position relative
+    height 100%
+    width 100%
+    min-width 100px
+    min-height 100px
+
+    > li
+        position absolute
+        left 0
+        top 0
+        bottom 0
+        right 0
+        &.show
+            z-index 2
+            display block
+            .detalle
+                z-index 2
+        &.hide
+            opacity 0
+            .detalle
+                z-index -1
+
+        &[onclick*="location"]
+            cursor pointer
+            
+    .item-cont
+        height 100%
+        width 100%
+        background-repeat no-repeat
+        overflow hidden
+        position relative
+        background-color $black
+        &[style*="background"]
+            background-color transparent
+        &[onclick*="banner.lnk"]
+            cursor pointer
+        
+    &:hover
+        .detalle
+            opacity 0.75
+            border-radius 0 !important
+            margin-bottom 0 !important
+            margin-top 0 !important
+            p
+                opacity 1
+            
+        .radios
+            margin-top 0 !important
+            margin-bottom 0 !important
+            
+    .radios
+        cursor default
+        transition all ease-in-out 250ms
+        z-index 10
+        position absolute
+        width 90%
+        padding 0 5%
+        text-align center
+
+        .item-lnk
+            display inline-block
+            transition all ease-in-out 250ms
+            cursor pointer
+            border-radius 100px
+            border 1px solid $gray
+            height 12px
+            width 12px
+            background white
+            margin auto 2px
+
+            &:hover
+                background: $blue;
+
+            &.active
+                background: $black;
+            
+    .iframe
+        margin auto
+        bottom 5%
+        height 90%
+        width 80%
+        display block
+        max-width 640px
+        position relative
+        z-index 1
+        top 5%
+
+        & +.detalle
+            display none
+        
+    img
+        display block
+        margin auto
+        display none
+    
+    .detalle
+        transition all ease-in-out 250ms
+        position absolute
+        cursor default
+        background-color $black
+        opacity 0.25
+        color #fff
+        left 0
+        right 0
+        padding 5px 15px 
+        border-radius 50% 50% 0 0
+        p
+            transition all ease-in-out 250ms
+            max-height 55px
+            opacity 0
+            padding 1px 0px
+            margin auto
+        
+        &:hover
+            opacity: 1;
+        
+        @media (max-width $screen-sm)
+            text-align center
+        
+    
+    .btn
+        transition all ease-in-out 250ms
+        display inline-block
+        border-radius 2px
+        background $blue
+        color white
+        padding 4px 8px
+        text-decoration none
+        margin 5px
+        &:hover
+            box-shadow rgba($blue,0.75) 0 0 8px 0 
+        
+    
+    .arr 
+        $circsize=600px
+        $arrHeight=35px
+        $arrWidth=20px
+
+        height 100%
+        width 60px
+        position absolute
+        vertical-align middle
+        display none
+        text-decoration none
+        color $black
+        overflow hidden
+        z-index 3
+
+        &:hover
+            color $blue
+            .icon i
+                opacity 1
+                &:before,&:after
+                    background-color $blue
+
+        .icon
+            transition all 250ms ease-in-out
+            box-shadow rgba(0,0,0,0) 0px 0px 0px 0 inset
+            position absolute
+            top 50%
+            width $circsize
+            height $circsize
+            line-height $circsize
+            margin-top -0.5* $circsize
+            font-size 40px
+            cursor pointer
+            opacity 0.75
+
+            i
+                transition all 250ms ease-in-out
+                position absolute
+                top 50%
+                margin-top -0.5em
+                #banner-local-html&
+                    top 20px
+                &:before,&:after
+                    transition all 250ms ease-in-out
+                    position relative
+                    background $black
+                    display inline-block
+                    content ''
+                    height $arrHeight
+                    width $arrWidth
+                
+                &:before
+                    top -($arrHeight)* 0.5
+                &:after
+                    top ($arrHeight)* 0.5
+
+                
+        &.left
+            text-align right
+            left 0
+            border-radius 0 1000% 1000% 0
+
+            .icon
+                right 0;
+                i
+                    right 5px
+                    &:before
+                        transform skewX(-30deg)
+                    
+                    &:after
+                        left -($arrWidth)
+                        transform skewX(30deg)
+
+        &.right
+            text-align left
+            right 0
+            border-radius 1000% 0 0 1000%
+
+            .icon
+                left 0
+                i
+                    //@include arrow(10px,20px,right,$black);
+                    left 5px
+                    &:before
+                        left $arrWidth
+                        transform skewX(30deg)
+                    
+                    &:after
+                        transform skewX(-30deg);
+                    
+
+/*tamaño de imagen*/
+.banner
+    &.bsiz-ex .item-cont
+        background-size 100% 100%
+    &.bsiz-rl .item-cont//Rellenar
+        background-size cover
+    &.bsiz-aw .item-cont//Ajustar ancho
+        background-size 100% auto
+    &.bsiz-ah .item-cont//ajustar alto
+        background-size auto 100%
+    &.bsiz-or .item-cont//tamaño original
+        background-size auto auto
+    &.bsiz-ms .item-cont//mosaico
+        background-size auto auto
+        background-repeat repeat
+
+.banner
+    &.bpos-up .item-cont//arriba
+        background-position top center
+    &.bpos-cn .item-cont//centrado
+        background-position center center
+    &.bpos-dw .item-cont//abajo
+        background-position bottom center
+
+/*comentarios*/
+.banner
+    &.cmt-no .detalle
+        display none
+    &.cmt-up 
+        .detalle
+            top 0
+            margin-top -45px
+            border-radius 0 0 50% 50%
+            &:hover
+                .detalle{}
+        &.rad-up .radios
+            top 50px
+            margin-top -40px
+    &.cmt-dw
+        .detalle
+            bottom 0
+            margin-bottom -45px
+        &.rad-dw .radios
+            margin-bottom -40px
+            bottom 50px
+
+/*botones-radios*/
+.banner
+    &.rad-no .radios
+        display none
+    &.rad-dw .radios
+        bottom 10px
+    &.rad-up .radios
+        top 10px
+    //
+    &.rad-lf .radios
+        text-align left
+    &.rad-rg .radios
+        text-align right
+    &.rad-cn .radios
+        text-align center
+.banner
+    &.flc-si
+        .detalle
+            padding-right 60px
+            padding-left 60px
+        .arr
+            display block
+/*transiciones*/
+.banner 
+    &.tr-0//atenuacion
+        .item
+            &.show
+                animation atenuar_in 1s ease-in 1
+            &.hide
+                animation atenuar_out 1s ease-out 1
+    &.tr-1//atenuacion
+        .item
+            &.show
+                animation desph_in 1s ease-in-out 1
+            &.hide
+                animation desph_out 1s ease-in-out 1
+
+/*temas*/
+.banner //Normal cuadrado consombra en los botones
+    &.tm-0
+        .arr 
+            .icon
+                border-radius 1000px
+            &.left
+                &:hover
+                    .icon
+                        box-shadow rgba(0,0,0,0.25) -4px 0px 6px 0 inset
+                    
+            &.right
+                &:hover
+                    .icon
+                        box-shadow rgba(0,0,0,0.25) 4px 0px 6px 0 inset
+    &.tm-1 //EFORCERS
+        @extend .banner.tm-0
+        .arr .icon
+            background white
+            opacity 1
+        
+        .iframe
+            box-shadow(rgba(0,0,0,0.75) 0 0 12px 0)
+
+    &.tm-2 //BTNS right
+        .arr
+            bottom 18%
+            text-align center
+            &, .icon
+                height 60px
+                width 60px
+                overflow visible
+            .icon
+                margin: 0
+                i
+                    height 60px
+                    width 60px
+                    top auto
+                    &:before,&:after
+                        height 22px
+                    
+                    &:before
+                        top 8px
+                        transform skewX(-45deg)
+                        #banner-local-html&
+                            top -282px
+                            
+                    &:after
+                        top 30px
+                        transform skewX(45deg)
+                        #banner-local-html&
+                            top -261px
+            &.left
+                right 50px
+                left auto
+                .icon i{}
+                
+            &.right
+                .icon i
+                    transform rotate(180deg)
+
+/*forma*/
+.banner //Normal cuadrado consombra en los botones
+    &.fr-0{} //CUADRADA
+            
+    &.fr-1 //bordeado leve
+        &
+        .item-cont
+        .iframe
+            overflow hidden
+            border-radius 20px
+            
+    &.fr-2 //bordeado medio
+        &
+        .item-cont
+            overflow hidden
+            border-radius 10000px
+            .iframe
+                border-radius 20px
+                
+    
+    &.fr-3 //bordeado circular/ovalado
+        &
+        .item-cont
+        .iframe
+            overflow hidden
+            border-radius 100%

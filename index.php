@@ -8,15 +8,12 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
 </head>
 <body>
+
+	<link rel="stylesheet" href="./css/banner.css">
 	<div class="wrapper">
 		<?php include('body.html');?>
 	</div>
+	<script src="./js/banner.js"></script>
 
-<style>
-<?php include('css/banner.css');?>
-</style>
-<script>
-<?php include('js/banner.js');?>
-</script>
 </body>
 </html>

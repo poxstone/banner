@@ -1,0 +1,148 @@
+support-for-ie = true
+
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  -ms-{prop} args
+  -o-{prop} args
+  {prop} args
+/*
+div
+  vendor animation, foo 250ms ease-in-out*/
+
+display(mode, args...)
+  if mode == 'inline-block'
+    display inline-block args
+    if support-for-ie
+      zoom 1
+      *display inline args
+  else
+    display mode args
+/*
+a
+  display inline-block
+*/
+
+arrow($width=20px, $height=20px, $direction='up', $color='red')
+  width 0
+  height 0
+  display inline-block
+  border-style solid
+  
+  if $direction == 'right' 
+    border-width $height 0 $height $width
+    border-color transparent transparent transparent $color
+
+  if $direction == 'left' 
+    border-width $height $width $height 0
+    border-color transparent $color transparent transparent
+
+  if $direction == 'up' 
+    border-width 0 $height $width $height
+    color $height
+    border-color transparent transparent $color transparent
+
+  if $direction == 'down' 
+    border-width $width $height 0 $height
+    border-color $color transparent transparent transparent
+
+  if $direction == 'downLeft'
+    border-width $width 0 0 $height
+    border-color transparent transparent transparent $color
+
+  if $direction == 'downRight'
+    border-width 0 0 $height $width
+    border-color transparent transparent $color transparent
+
+  if $direction == 'upRight'
+    border-width 0 $width $height 0
+    border-color transparent $color transparent transparent
+
+  if $direction == 'upLeft'
+    border-width $height $width 0 0
+    border-color $color transparent transparent transparent
+/*button
+  arrow 20px 20px down green*/
+
+input-placeholder()
+  &.placeholder
+    {block}
+  &:-moz-placeholder
+    {block}
+  &::-moz-placeholder
+    {block}
+  &:-ms-input-placeholder
+    {block}
+  &::-webkit-input-placeholder
+    {block}
+/*input
+  +input-placeholder()
+    color red*/
+
+/*
+@keyframes foo {
+  from {
+    color black
+  }
+  to {
+    color white
+  }
+}
+*/
+  
+beforeAfter($display=block,$position=absolute,$width=100%,$height=100%)
+  content ''
+  display $display
+  width $width
+  height $height
+  position $position
+/*
+span
+  beforeAfter(block absolute 10px 11px)
+*/
+
+text-fill-color($ref=transparent)
+  vendor text-fill-color, $ref
+/*
+body  
+  text-fill-color(text)
+*/
+
+defaultDisplay($display=block)
+  display $display
+  list-style none
+  margin auto
+  padding 0
+/*
+a
+  defaultDisplay(inline-block)
+*/
+ulUnformat($display=block)
+  &,ul,li
+    defaultDisplay($display)
+/*ul
+  ulUnformat(inline-block)
+*/
+
+scrollbar($color=gray)
+  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+  //scroll
+  &::-webkit-scrollbar
+    width: 6px
+  &::-webkit-scrollbar-track
+    -webkit-box-shadow inset 0 0 6px rgba(0,0,0,0.3)
+    border-radius 2px
+    background-color lightness($color, 80%)
+  &::-webkit-scrollbar-thumb
+    border-radius 10px
+    background $gray
+/*html
+  scrollbar()
+*/
+
+no-select()
+  -webkit-touch-callout none
+  vendor user-select, none
+/*body
+  no-select()
+*/
